@@ -24,7 +24,7 @@ extern void grid_dump(grid *g)
     printf("\n");
 }
 
-extern grid* grid_new(int size)
+extern grid* grid_new(uint8_t size)
 {
     int i;
     grid *g = malloc(sizeof(grid));
@@ -58,3 +58,8 @@ extern void grid_expand(grid *g, int new_size)
 {
 
 }
+
+
+
+
+

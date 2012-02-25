@@ -1,6 +1,9 @@
 #ifndef __GRID_H
 #define __GRID_H
 
+#include <stdint.h>
+#include "util.h"
+
 typedef enum
 {
     red,
@@ -10,11 +13,6 @@ typedef enum
     num_colors,
     open
 } color; 
-
-typedef struct
-{
-    int x, y;
-} point;
 
 typedef color** grid_ptr;
 
@@ -28,7 +26,9 @@ extern color get_color(grid *, point *);
 
 extern void grid_dump(grid *);
 
-extern grid* grid_new(int);
+extern grid* grid_new(uint8_t);
+
+extern grid* grid_trivial(int);
 
 extern void grid_free(grid *);
 
