@@ -51,6 +51,23 @@ extern void grid_free(grid *g)
 
 extern void grid_init(grid *g)
 {
+    static bool needSeed = TRUE;
+    int x, y;
+
+    if(needSeed)
+    {
+        srand((unsigned int)time(NULL));
+        needSeed = FALSE;
+    }
+
+    for(x=0; x<g->size; x++)
+    {
+        for(y=0; y<g->size; y++)
+        {
+            color rndcolor = (color)(rand() % num_colors);
+            ((g->table)[x][y]) = rndcolor;
+        }
+    }
    
 }
 

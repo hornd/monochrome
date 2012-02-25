@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include "grid.h"
+#include "rect.h"
 #include "util.h"
 
 #define MAX_GRID_TRIVIAL 3
@@ -14,15 +15,18 @@ void print_solution(grid *g)
     grid_dump(g);
 }
 
-static void go(uint8_t goal_size)
+/*static void go(uint8_t goal_size)
 {
-    /*    grid *g = grid_trivial(MAX_GRID_TRIVIAL); */
-}
+        grid *g = grid_trivial(MAX_GRID_TRIVIAL); 
+}*/
 
 
 int main(int argc, char ** argv)
 {
+    U8 debug_count = 0;
+
     uint8_t goal_size;
+    grid *g;
     if (argc != 2)
     {
         printf("Usage: monochrome <size>\n");
@@ -30,14 +34,34 @@ int main(int argc, char ** argv)
     }
 
     goal_size = atoi(argv[1]);
-    if (goal_size <= MAX_GRID_TRIVIAL)
+
+    g = grid_new(goal_size);
+
+    grid_init(g);
+
+
+    while(get_monochrome_count(g) != 0)
     {
-        /*( print_solution(grid_trivial(goal_size)); */
+        printf("%d\n", debug_count++);
+        grid_free(g);
+        g = grid_new(goal_size);
+        grid_init(g);
     }
+
+    grid_dump(g);
+
+    return 0;
+
+}
+
+/*    if (goal_size <= MAX_GRID_TRIVIAL)
+    {
+        ( print_solution(grid_trivial(goal_size)); 
+   }
     else
     {
         go(goal_size);
     }
 
     return 0;
-}
+} */

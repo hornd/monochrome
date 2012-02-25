@@ -14,6 +14,8 @@ typedef struct
 
 extern U32 get_monochrome_count(grid *);
 
+extern bool rect_is_monochrome(grid *g, rect *r);
+
 extern bool is_rectangle_monochrome(grid *, rect);
 
 #endif

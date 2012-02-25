@@ -26,7 +26,7 @@ static void dump_rectangle(rect *r)
 
 static inline U32 rect_height(rect *);
 static inline U32 rect_width(rect *);
-static rect** get_rect_in_grid(grid *, int *);
+static rect** get_rect_in_grid(grid *, U8 *);
 static U32 get_total_rectangles_in_grid(grid *);
 static bool is_rect_valid(rect *);
 static rect* rect_new();
@@ -34,7 +34,21 @@ static void rect_free(rect *);
 
 extern U32 get_monochrome_count(grid *g)
 {
+    U8 i, rectangles_in_grid = 0;
+    U32 ret = 0;
+    rect **rects = get_rect_in_grid(g, &rectangles_in_grid);
+    
+/*    printf("Inside get_monochrome_count. Total rect: %d\n", rectangles_in_grid); */
 
+    for(i=0; i<rectangles_in_grid; i++)
+    {
+        if (rect_is_monochrome(g, rects[i]))
+        {
+            ret++;
+        }
+    }
+
+    return ret;
 }
  
 extern bool rect_is_monochrome(grid *g, rect *r)
@@ -44,24 +58,41 @@ extern bool rect_is_monochrome(grid *g, rect *r)
     color pt2 = get_color(g, r->bottom_left);
     color pt3 = get_color(g, r->bottom_right);
 
-    return pt0 == pt1 && pt0 == pt2 && pt0 == pt3;
+    char *color_table= "RYGB__";
+
+    if(pt0 == pt1 && pt0 == pt2 && pt0 == pt3)
+    {
+/*        printf("This is monochrome\n");
+        printf("------------------\n");
+
+        printf("%c  %c\n", color_table[pt0], color_table[pt1]);
+        printf("%c  %c\n", color_table[pt2], color_table[pt3]);
+*/
+
+        return TRUE;
+    }
+    return FALSE;
+
+/*    return pt0 == pt1 && pt0 == pt2 && pt0 == pt3; */
 }
 
 
 static inline U32 rect_height(rect *r)
 {
-    return r->bottom_right->x - r->top_left->x;
+    return r->bottom_right->y - r->top_left->y;
 }
 
 static inline U32 rect_width(rect *r)
 {
-    return r->bottom_right->y - r->top_left->y;
+    return r->bottom_right->x - r->top_left->x;
 }
 
-static rect** get_rect_in_grid(grid *g, int *count)
+static rect** get_rect_in_grid(grid *g, U8 *count)
 {
     U8 start_x, start_y, end_x, end_y;
-    U32 rect_count = get_total_rectangles_in_grid(g);
+    U8 rect_idx = 0;
+    rect **ret = malloc(sizeof(rect*) * get_total_rectangles_in_grid(g));
+
     for(start_x = 0; start_x < g->size; start_x++)
     {
         for(start_y = 0; start_y < g->size; start_y++)
@@ -73,13 +104,12 @@ static rect** get_rect_in_grid(grid *g, int *count)
                     rect *r = rect_new();
                     point_set(r->top_left, start_x, start_y);
                     point_set(r->bottom_right, end_x, end_y);
-                    //POINTS ARE WRONG FIX
-//                    point_set(r->top_right, start_x, end_y);
-                    //                   point_set(r->bottom_left, end_x, start_y);
+                    point_set(r->top_right, end_x, start_y);
+                    point_set(r->bottom_left, start_x, end_y);
 
-                    if (is_rect_valid(r))  // is_rect_valid(r)
+                    if (is_rect_valid(r))  /* is_rect_valid(r) */
                     { 
-                        
+                        ret[rect_idx++] = r;
                     }
                     else
                     {
@@ -89,6 +119,9 @@ static rect** get_rect_in_grid(grid *g, int *count)
             }
         }
     }
+
+    *count = rect_idx;
+    return ret;
 }
 
 static bool is_rect_valid(rect *r)
@@ -111,7 +144,7 @@ static void rect_free(rect *r)
     point_free(r->top_left);
     point_free(r->top_right);
     point_free(r->bottom_left);
-    point_Free(r->bottom_right);
+    point_free(r->bottom_right);
     free(r);
 }
 
