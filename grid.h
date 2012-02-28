@@ -28,12 +28,8 @@ extern void grid_dump(grid *);
 
 extern grid* grid_new(uint8_t);
 
-extern grid* grid_trivial(int);
-
 extern void grid_free(grid *);
 
 extern void grid_init(grid *);
-
-extern void grid_expand(grid *, int);
 
 #endif

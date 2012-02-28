@@ -71,11 +71,6 @@ extern void grid_init(grid *g)
    
 }
 
-extern void grid_expand(grid *g, int new_size)
-{
-
-}
-
 
 
 

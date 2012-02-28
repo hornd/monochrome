@@ -8,7 +8,6 @@ static inline U32 rect_height(rect *);
 static inline U32 rect_width(rect *);
 static rect** get_rect_in_grid(grid *, U32 *);
 static U32 get_total_rectangles_in_grid(grid *);
-static bool is_rect_valid(rect *);
 static rect* rect_new();
 static void rect_free(rect *);
 
@@ -77,14 +76,7 @@ static rect** get_rect_in_grid(grid *g, U32 *count)
                     point_set(r->top_right, end_x, start_y);
                     point_set(r->bottom_left, start_x, end_y); 
 
-                    if (is_rect_valid(r))
-                    { 
-                        ret[rect_idx++] = r;
-                    }
-                    else
-                    {
-                        rect_free(r);
-                    }
+                    ret[rect_idx++] = r;
                 }
             }
         }
@@ -92,11 +84,6 @@ static rect** get_rect_in_grid(grid *g, U32 *count)
 
     *count = rect_idx;
     return ret;
-}
-
-static bool is_rect_valid(rect *r)
-{
-    return rect_height(r) >= 1 && rect_width(r) >= 1; 
 }
 
 static rect* rect_new()
