@@ -26,7 +26,7 @@ extern color get_color(grid *, point *);
 
 extern void grid_dump(grid *);
 
-extern grid* grid_new(uint8_t);
+extern grid* grid_new(U8);
 
 extern void grid_free(grid *);
 

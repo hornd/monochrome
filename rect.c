@@ -13,8 +13,7 @@ static void rect_free(rect *);
 
 extern U32 get_monochrome_count(grid *g)
 {
-    U32 i, rectangles_in_grid = 0;
-    U32 ret = 0;
+    U32 i, rectangles_in_grid = 0, ret = 0;
     rect **rects = get_rect_in_grid(g, &rectangles_in_grid);
     
     for(i=0; i<rectangles_in_grid; i++)

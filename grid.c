@@ -12,7 +12,7 @@ extern color get_color(grid *g, point *p)
 
 extern void grid_dump(grid *g)
 {
-    int x, y, size = g->size;
+    U8 x, y, size = g->size;
     for(x=0; x<size; x++)
     {
         for(y=0; y<size; y++)
@@ -24,9 +24,9 @@ extern void grid_dump(grid *g)
     printf("\n");
 }
 
-extern grid* grid_new(uint8_t size)
+extern grid* grid_new(U8 size)
 {
-    int i;
+    U8 i;
     grid *g = malloc(sizeof(grid));
 
     g->table = malloc(sizeof(color *) * size);
@@ -40,7 +40,7 @@ extern grid* grid_new(uint8_t size)
 
 extern void grid_free(grid *g)
 {
-    int i;
+    U8 i;
     for(i=0; i<g->size; i++)
     {
         free(g->table[i]);
@@ -52,7 +52,7 @@ extern void grid_free(grid *g)
 extern void grid_init(grid *g)
 {
     static bool needSeed = TRUE;
-    int x, y;
+    U8 x, y;
 
     if(needSeed)
     {
