@@ -15,20 +15,9 @@ void print_solution(grid *g)
     grid_dump(g);
 }
 
-/*static void go(uint8_t goal_size)
-{
-        grid *g = grid_trivial(MAX_GRID_TRIVIAL); 
-}*/
-
-
 int main(int argc, char ** argv)
 {
-    U8 x, y;
-    char *color_table = "RYGB__";
-
-    U8 debug_count = 0;
-
-    uint8_t goal_size;
+    U8 goal_size;
     grid *g;
     if (argc != 2)
     {
@@ -37,13 +26,8 @@ int main(int argc, char ** argv)
     }
 
     goal_size = atoi(argv[1]);
-
     g = grid_new(goal_size);
-
     grid_init(g);
-
-
-    get_monochrome_count(g);
 
     while(get_monochrome_count(g) != 0)
     {
@@ -52,21 +36,8 @@ int main(int argc, char ** argv)
         grid_init(g);
     } 
 
-
-    grid_dump(g);
+    print_solution(g);
 
     return 0;
 
 }
-
-/*    if (goal_size <= MAX_GRID_TRIVIAL)
-    {
-        ( print_solution(grid_trivial(goal_size)); 
-   }
-    else
-    {
-        go(goal_size);
-    }
-
-    return 0;
-} */

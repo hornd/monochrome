@@ -60,7 +60,6 @@ static rect** get_rect_in_grid(grid *g, U32 *count)
 {
     U8 start_x, start_y, end_x, end_y;
     U32 rect_idx = 0;
-    U32 debug_count = get_total_rectangles_in_grid(g);
     rect **ret = malloc(sizeof(rect*) * get_total_rectangles_in_grid(g));
 
     for(start_x = 0; start_x < g->size; start_x++)
@@ -91,18 +90,12 @@ static rect** get_rect_in_grid(grid *g, U32 *count)
         }
     }
 
-
-/*    printf("Generating rects. Size: %d\n", g->size); */
-
     *count = rect_idx;
     return ret;
 }
 
 static bool is_rect_valid(rect *r)
 {
-    U32 height = rect_height(r);
-    U32 width = rect_width(r);
-
     return rect_height(r) >= 1 && rect_width(r) >= 1; 
 }
 
