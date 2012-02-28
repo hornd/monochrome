@@ -23,6 +23,9 @@ void print_solution(grid *g)
 
 int main(int argc, char ** argv)
 {
+    U8 x, y;
+    char *color_table = "RYGB__";
+
     U8 debug_count = 0;
 
     uint8_t goal_size;
@@ -40,13 +43,15 @@ int main(int argc, char ** argv)
     grid_init(g);
 
 
+    get_monochrome_count(g);
+
     while(get_monochrome_count(g) != 0)
     {
-        printf("%d\n", debug_count++);
         grid_free(g);
         g = grid_new(goal_size);
         grid_init(g);
-    }
+    } 
+
 
     grid_dump(g);
 

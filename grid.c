@@ -17,7 +17,7 @@ extern void grid_dump(grid *g)
     {
         for(y=0; y<size; y++)
         {
-            printf("%c ", color_table[g->table[x][y]]);
+            printf("%c", color_table[g->table[y][x]]);
         }
         printf("\n");
     }
@@ -65,7 +65,7 @@ extern void grid_init(grid *g)
         for(y=0; y<g->size; y++)
         {
             color rndcolor = (color)(rand() % num_colors);
-            ((g->table)[x][y]) = rndcolor;
+            ((g->table)[y][x]) = rndcolor;
         }
     }
    
